@@ -27,6 +27,9 @@ app.set("views", path.resolve("./views"));
 app.get("/", (req, res) => {
   return res.render("signup");
 });
+// app.get("/signup", (req, res) => {
+//   return res.render("signup");
+// });
 
 // Signup route
 app.post("/user/signup", async (req, res) => {
@@ -40,9 +43,10 @@ app.post("/user/signup", async (req, res) => {
 });
 
 // Login route
-app.post("/user/login", (req, res) => {
+app.post("/user/login", async (req, res) => {
   const { email, password } = req.body;
-  const user = User.findOne({
+  // console.log({ email, password });
+  const user = await User.findOne({
     email: email,
     password: password,
   });
