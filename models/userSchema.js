@@ -7,12 +7,12 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
+    unique: [true, "Email is Already Taken"],
   },
   password: {
     type: String,
     required: true,
-    minlength: [4, "Your Password Length Should be atleat 8 Character"],
+    minlength: [8, "Your Password Length Should be atleat 8 Character"],
   },
 });
 

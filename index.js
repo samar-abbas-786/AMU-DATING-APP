@@ -27,9 +27,6 @@ app.set("views", path.resolve("./views"));
 app.get("/", (req, res) => {
   return res.render("signup");
 });
-// app.get("/signup", (req, res) => {
-//   return res.render("signup");
-// });
 
 // Signup route
 app.post("/user/signup", async (req, res) => {
@@ -40,6 +37,26 @@ app.post("/user/signup", async (req, res) => {
     password,
   });
   return res.status(201).render("home");
+});
+app.get("/forgotpassword", (req, res) => {
+  return res.render("forgotpassword");
+});
+app.post("/forgot-password", async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await User.findOne({ email: email });
+
+    if (!user) {
+      return res.json({ message: "No User Available with this Email" });
+    } else {
+      console.log(user.password);
+      console.log(user.name);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
 // Login route
