@@ -38,9 +38,13 @@ app.post("/user/signup", async (req, res) => {
   });
   return res.status(201).render("home");
 });
+
+//GET FORGOT PASSWORD-PAGE
 app.get("/forgotpassword", (req, res) => {
   return res.render("forgotpassword");
 });
+
+//POST FORGOT PASSWORD
 app.post("/forgot-password", async (req, res) => {
   const { email } = req.body;
 
@@ -56,6 +60,25 @@ app.post("/forgot-password", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+
+//CHANGE PASSWORD
+app.post("/update-password", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.json({ message: "No user found with this email" });
+    }
+    user.password = password;
+    await user.save();
+    return res.json({ message: "Password updated successfully" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
