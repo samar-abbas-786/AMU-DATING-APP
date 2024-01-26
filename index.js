@@ -54,6 +54,7 @@ app.post("/forgot-password", async (req, res) => {
     if (!user) {
       return res.json({ message: "No User Available with this Email" });
     } else {
+      res.send(`Your Password is :<h3>${user.password}</h3>`);
       console.log(user.password);
       console.log(user.name);
     }
@@ -62,7 +63,6 @@ app.post("/forgot-password", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
-
 
 //CHANGE PASSWORD
 app.post("/update-password", async (req, res) => {
